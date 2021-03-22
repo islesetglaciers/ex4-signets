@@ -6,11 +6,34 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useState } from 'react';
 import { TwitterPicker } from 'react-color';
+import { createMuiTheme, makeStyles, MuiThemeProvider } from '@material-ui/core/styles';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: green[700],},
+    secondary: {
+      main: red[900],},
+  },
+});
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1.5)
+    },
+  },
+  
+}));
 
 export default function AjouterDossier({ouvert, setOuvert, gererAjout}) {
   const [nom, setNom] = useState('');
   const [couverture, setCouverture] = useState('');
   const [couleur, setCouleur] = useState('#537169');
+
+  const margins = useStyles();
 
   function viderChamps() {
     setNom('');
@@ -25,7 +48,7 @@ export default function AjouterDossier({ouvert, setOuvert, gererAjout}) {
         <DialogContent>
           <TextField
             autoFocus
-            margin="dense"
+            margin="normal"
             id="nomDossier"
             label="Nom du dossier"
             type="text"
@@ -34,7 +57,7 @@ export default function AjouterDossier({ouvert, setOuvert, gererAjout}) {
             defaultValue={nom}
           />
           <TextField
-            margin="dense"
+            margin="normal"
             id="urlImage"
             label="Adresse de l'image de couverture"
             type="text"
@@ -42,20 +65,23 @@ export default function AjouterDossier({ouvert, setOuvert, gererAjout}) {
             onChange={(e) => setCouverture(e.target.value)}
             defaultValue={couverture}
           />
-          <TwitterPicker 
+          <TwitterPicker
             width="100%" 
             triangle="hide" 
             onChangeComplete={(couleur, e) => setCouleur(couleur.hex)}
             color={couleur}
+            colors={['#DBB1BC', '#FF5733', '#48A9A6', '#1CD0B4', '#D01CC7', '#A3D9FF']}
           />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={()=>{setOuvert(false); viderChamps()}} color="primary">
-            Annuler
-          </Button>
-          <Button onClick={() => {nom !== '' && gererAjout(nom, couverture, couleur); viderChamps(); }} color="primary">
-            Ajouter
-          </Button>
+        <DialogActions className={margins.root}>
+          <MuiThemeProvider theme={theme} >
+            <Button onClick={()=>{setOuvert(false); viderChamps()}} variant="contained" color="secondary">
+              Annuler
+            </Button>
+            <Button onClick={() => {nom !== '' && gererAjout(nom, couverture, couleur); viderChamps(); }} variant="contained" color="primary">
+              Ajouter
+            </Button>
+          </MuiThemeProvider>
         </DialogActions>
       </Dialog>
     </div>

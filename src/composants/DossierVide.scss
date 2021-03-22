@@ -1,0 +1,26 @@
+.DossierVide {
+    // position: relative;
+    background-color: teal;
+    width: 300px;
+    height: 350px;
+    margin: 0 auto;
+    margin-top: 30px;
+    color: #fff;
+  
+    .info {
+      padding: 20px 20px;
+      font-family: Roboto;
+      h2 {
+        font-weight: 400;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        font-weight: 400;
+        text-align: center;
+        font-size: 7em;
+        margin: 0;
+        margin-top: 50px;
+      }
+    }
+  }

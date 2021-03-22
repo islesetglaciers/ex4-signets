@@ -2,6 +2,7 @@ import './ListeDossiers.scss';
 import Dossier from './Dossier';
 import { firestore } from '../firebase';
 import { useEffect, useState } from 'react';
+import DossierVide from './DossierVide';
 
 export default function ListeDossiers({utilisateur, etatDossiers}) {
   // État des dossiers (notez que cet état est défini dans le composant parent "Appli", et passé ici dans les props)
@@ -31,13 +32,20 @@ export default function ListeDossiers({utilisateur, etatDossiers}) {
     }, []
   );
 
-  return (
-    <ul className="ListeDossiers">
-      {
-        dossiers.map( 
-          dossier =>  <li key={dossier.id}><Dossier {...dossier} /></li>
-        )
-      }
-    </ul>
-  );
+  if (dossiers.length) {
+    return (
+      <ul className="ListeDossiers">
+        
+        {
+          dossiers.map( 
+            dossier =>  <li key={dossier.id}><Dossier {...dossier} /></li>
+          )
+        }
+      </ul>
+    );
+  } else {
+    return (
+      <DossierVide />
+    )
+  }
 }
